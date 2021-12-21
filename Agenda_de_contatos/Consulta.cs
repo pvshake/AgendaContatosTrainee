@@ -62,14 +62,14 @@ namespace Agenda_de_contatos
             SqlConnection con = new SqlConnection("Data Source=LAPTOP-INEFT7UP;Initial Catalog=Agenda;Integrated Security=True");
             con.Open();
 
-            string Query = "SELECT * FROM Contato WHERE nome = '"+txtNome.Text+"'";
+            string Query = "SELECT * FROM Contato WHERE nome like '%" +txtNome.Text+ "%'";
 
-            SqlCommand cmd = new SqlCommand(Query, con);
-            cmd.Parameters.AddWithValue("'" + txtNome.Text + "'", txtNome.Text);
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            SqlDataAdapter adapter = new SqlDataAdapter(Query, con);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
+            dataGridView1.AutoGenerateColumns = false;
             dataGridView1.DataSource = dt;
+            con.Close();
         }
 
         private void button2_Click_1(object sender, EventArgs e)
@@ -103,6 +103,11 @@ namespace Agenda_de_contatos
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             mostraTudo();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
