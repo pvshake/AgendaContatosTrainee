@@ -63,7 +63,11 @@ namespace Agenda_de_contatos
 
         private void button1_Click(object sender, EventArgs e)
         {
-            cadastrar();
+            if (MessageBox.Show("Deseja realmente cadastrar esse contato?", "ATENÇÃO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                cadastrar();
+            else
+                limpar();
+                
         }
 
         private void cadastrar()
@@ -95,6 +99,7 @@ namespace Agenda_de_contatos
             con.Close();
 
             MessageBox.Show("CONTATO SALVO COM SUCESSO!");
+            limpar();
         }
        
 

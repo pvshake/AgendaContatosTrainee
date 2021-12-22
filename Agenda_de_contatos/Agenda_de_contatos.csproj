@@ -51,6 +51,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AgendaDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="AgendaDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgendaDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="AgendaDataSetExcluir.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AgendaDataSetExcluir.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Atualizar.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -135,6 +145,28 @@
     </None>
     <None Include="AgendaDataSet.xss">
       <DependentUpon>AgendaDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="AgendaDataSet1.xsc">
+      <DependentUpon>AgendaDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="AgendaDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AgendaDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AgendaDataSet1.xss">
+      <DependentUpon>AgendaDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="AgendaDataSetExcluir.xsc">
+      <DependentUpon>AgendaDataSetExcluir.xsd</DependentUpon>
+    </None>
+    <None Include="AgendaDataSetExcluir.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AgendaDataSetExcluir.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="AgendaDataSetExcluir.xss">
+      <DependentUpon>AgendaDataSetExcluir.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -24,20 +24,11 @@ namespace Agenda_de_contatos
         }
         private void limpar()
         {
-            txtCEP.Text = String.Empty;
-            txtCidade.Text = String.Empty;
-            txtComp.Text = String.Empty;
-            txtCPF.Text = String.Empty;
-            txtData.Text = String.Empty;
             txtEmail.Text = String.Empty;
-            txtEstado.Text = String.Empty;
-            txtNome.Text = String.Empty;
-            txtNumero.Text = String.Empty;
-            txtPais.Text = String.Empty;
-            txtRG.Text = String.Empty;
-            txtRua.Text = String.Empty;
             txtTel1.Text = String.Empty;
             txtTel2.Text = String.Empty;
+            txtID.Text = String.Empty;
+            txtNome.Text = String.Empty;
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -51,7 +42,17 @@ namespace Agenda_de_contatos
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-INEFT7UP;Initial Catalog=Agenda;Integrated Security=True");
+            con.Open();
 
+            string Query = "SELECT * FROM Contato WHERE nome like '%" + txtNome.Text + "%'";
+
+            SqlDataAdapter adapter = new SqlDataAdapter(Query, con);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.DataSource = dt;
+            con.Close();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -65,45 +66,11 @@ namespace Agenda_de_contatos
         }
         private void alterar()
         {
-            SqlConnection con = new SqlConnection("Data Source=LAPTOP-INEFT7UP;Initial Catalog=Agenda;Integrated Security=True");
-
-            string nome = txtNome.Text;
-            string cpf = txtCPF.Text;
-            string rg = txtRG.Text;
-            string dataNasc = txtData.Text;
             string email = txtEmail.Text;
             string tel1 = txtTel1.Text;
             string tel2 = txtTel2.Text;
-            string rua = txtRua.Text;
-            string numero = txtNumero.Text;
-            string comp = txtComp.Text;
-            string cep = txtCEP.Text;
-            string cidade = txtCidade.Text;
-            string estado = txtEstado.Text;
-            string pais = txtPais.Text;
 
-            string Query = "INSERT INTO Contato (nome, cpf, rg, data_de_nascimento, email, telefone1, telefone2, rua, numero, complemento, cep, cidade, estado, pais) VALUES ('" + nome + "', '" + cpf + "', '" + rg + "', '" + dataNasc + "', '" + email + "', '" + tel1 + "', '" + tel2 + "', '" + rua + "', '" + numero + "', '" + comp + "', '" + cep + "', '" + cidade + "', '" + estado + "', '" + pais + "')";
-            SqlCommand cmd = new SqlCommand(Query, con);
 
-            if(MessageBox.Show("Deseja realmente alterar?", "Alerta", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
-            {
-                MessageBox.Show("Dados Alterados com Sucesso!");
-            }
-            else
-            {
-                try
-                {
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    con.Close();
-                }
-            }
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -114,6 +81,53 @@ namespace Agenda_de_contatos
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void Atualizar_Load(object sender, EventArgs e)
+        {
+            mostrarTudo();
+        }
+        private void mostrarTudo()
+        {
+            // TODO: esta linha de código carrega dados na tabela 'agendaDataSet1.Contato'. Você pode movê-la ou removê-la conforme necessário.
+            this.contatoTableAdapter.Fill(this.agendaDataSet1.Contato);
+            SqlConnection con = new SqlConnection("Data Source=LAPTOP-INEFT7UP;Initial Catalog=Agenda;Integrated Security=True");
+            con.Open();
+
+            string Query = "SELECT * FROM Contato";
+
+            SqlCommand cmd = new SqlCommand(Query, con);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            dataGridView1.DataSource = dt;
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            mostrarTudo();
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Deseja realmente os dados deste contato?", "ATENÇÃO!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                SqlConnection con = new SqlConnection("Data Source=LAPTOP-INEFT7UP;Initial Catalog=Agenda;Integrated Security=True");
+                con.Open();
+
+                string Query = "UPDATE Contato SET telefone1 = '" + txtTel1.Text + "', telefone2 = '" + txtTel2.Text + "', email = '" + txtEmail.Text + "' WHERE id_contato = '" + txtID.Text + "'";
+                SqlCommand cmd = new SqlCommand(Query, con);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dataGridView1.DataSource = dt;
+
+                MessageBox.Show("Dados Alterados com Sucesso!");
+                mostrarTudo();
+                limpar();
+            }
+            else
+                mostrarTudo();                
         }
     }
 }
